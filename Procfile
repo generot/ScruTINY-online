@@ -1,1 +1,1 @@
-web: gunicorn -k gevent -w 1 wsgi:server
+web: gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 wsgi:server
