@@ -1,1 +1,1 @@
-web: gunicorn wsgi:socket
+web: gunicorn -k gevent -w 1 wsgi:socket
