@@ -1,0 +1,1 @@
+#njama nishto tuka

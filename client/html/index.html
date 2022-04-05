@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <title>Start page</title>
+
+    <head>
+        <script type="module" src="{{ url_for('static', filename='/js/main.js') }}"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        <link href="{{ url_for('static', filename='/css/navbar.css') }}" rel="stylesheet">
+    </head>
+
+    <body>
+        <img src="{{ url_for('static', filename='/css/logo3.png') }}" width="226.5" height="80">
+        <div id="popup-div"></div>
+
+        <input type="checkbox" id="active">
+        <label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
+        <div class="wrapper">
+            <ul>
+                <img src="{{ url_for('static', filename='/css/logo2.png') }}">
+                <li><a href="#">Home</a></li>
+                <li><a href="https://github.com/generot/ScruTINY">Repository</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
+
+<style>
+    .ds-message {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 16px;
+        margin-top: 3.5pt;
+        margin-left: 3.5pt;
+        color: #43383e;
+        line-height: 1.2;
+        position: relative;
+        display: block;
+        width: 50%;
+        height: 62px;
+        background: #fff;
+        border-radius: 31px;
+        padding: 0 35px 0 35px;
+    }
+</style>
