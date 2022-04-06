@@ -36,7 +36,7 @@ def verify():
     return scrutiny_db.verify_user(res["uid"])
 
 @server.route("/postData/<uid>", methods=["POST"])
-def handle_post(uid):
+def handle_post2(uid):
     res = request.get_data(as_text=True)
 
     #Might need to change the sockets later
