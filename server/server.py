@@ -1,4 +1,6 @@
 import os
+import json
+import server.database as scrutiny_db
 
 from flask import *
 from flask_socketio import SocketIO
@@ -12,6 +14,26 @@ socket = SocketIO(server)
 @server.route("/")
 def main_page():
     return render_template("index.html")
+
+@server.route("/user/<uid>")
+def load_user(uid):
+    return render_template("view.html")
+
+@server.route("/login")
+def login():
+    return render_template("login.html")
+
+@server.route("/registerUser", methods=["POST"])
+def signup():
+    resp = request.get_data(as_text=True)
+    obj = json.loads(resp)
+
+    return scrutiny_db.register_user(obj["name"])
+
+@server.route("/verifyUser", methods=["GET"])
+def verify():
+    res = request.args.to_dict()
+    return scrutiny_db.verify_user(res["uid"])
 
 @server.route("/postData", methods=["POST"])
 def handle_post():

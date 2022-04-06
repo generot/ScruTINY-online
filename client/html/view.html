@@ -4,13 +4,8 @@
 
     <head>
         <script src="{{ url_for('static', filename='/js/requests.js') }}"></script>
-        <script>
-            let userId = window.localStorage.getItem("user-id");
-
-            if(userId) {
-                window.location.replace(`/user/${userId}`);
-            }
-        </script>
+        <script src="{{ url_for('static', filename='/js/login.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='/js/main.js') }}"></script>
 
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -29,7 +24,7 @@
         <div class="wrapper">
             <ul>
                 <img src="{{ url_for('static', filename='/css/logo2.png') }}">
-                <li><a href="/login">Log in</a></li>
+                <li><a onclick="logout()">Log out</a></li>
                 <li><a href="https://github.com/generot/ScruTINY">Repository</a></li>
             </ul>
         </div>
