@@ -35,6 +35,15 @@ def verify():
     res = request.args.to_dict()
     return scrutiny_db.verify_user(res["uid"])
 
+@server.route("/postData/<uid>", methods=["POST"])
+def handle_post(uid):
+    res = request.get_data(as_text=True)
+
+    #Might need to change the sockets later
+    socket.emit("post-data", { "data": res }, to=f"{uid}")
+
+    return "\r\nSEND OK\r\n"
+
 @server.route("/postData", methods=["POST"])
 def handle_post():
     res = request.get_data(as_text=True)
@@ -42,3 +51,7 @@ def handle_post():
     socket.emit("post-data", { "data": res })
 
     return "\r\nSEND OK\r\n"
+
+@socket.on("connect")
+def on_connect(data):
+    print(data)
