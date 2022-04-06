@@ -30,12 +30,17 @@ def signup():
     resp = request.get_data(as_text=True)
     obj = json.loads(resp)
 
-    return scrutiny_db.register_user(obj["name"])
+    return scrutiny_db.register_user(obj)
 
 @server.route("/verifyUser", methods=["GET"])
 def verify():
     res = request.args.to_dict()
     return scrutiny_db.verify_user(res["uid"])
+
+@server.route("/user/<uid>/getData", methods=["GET"])
+def get_data(uid):
+    data = scrutiny_db.get_data_from_db(uid)
+    return data
 
 @server.route("/postData/<uid>", methods=["POST"])
 def handle_post2(uid):
@@ -43,6 +48,7 @@ def handle_post2(uid):
     path = f"/user/{uid}"
 
     socket.emit("post-data", { "data": res }, to=f"{all_clients[path]}")
+    scrutiny_db.add_data_to_db(uid, res)
 
     return "\r\nSEND OK\r\n"
 

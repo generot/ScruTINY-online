@@ -3,27 +3,27 @@
     <title>ScruTINY</title>
 
     <head>
-        <script src="{{ url_for('static', filename='/js/requests.js') }}"></script>
-        <script src="{{ url_for('static', filename='/js/login.js') }}"></script>
-        <script type="module" src="{{ url_for('static', filename='/js/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/requests.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
 
         <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
         <!--<script src="https://kit.fontawesome.com/a076d05399.js"></script>-->
         <script src="https://scrutiny-online.herokuapp.com/static/js/font.js"></script>
 
-        <link href="{{ url_for('static', filename='/css/navbar.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/navbar.css') }}" rel="stylesheet">
     </head>
 
     <body>
-        <img src="{{ url_for('static', filename='/css/logo3.png') }}" width="226.5" height="80">
+        <img src="{{ url_for('static', filename='css/logo3.png') }}" width="226.5" height="80">
         <div id="popup-div"></div>
 
         <input type="checkbox" id="active">
         <label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
         <div class="wrapper">
             <ul>
-                <img src="{{ url_for('static', filename='/css/logo2.png') }}">
+                <img src="{{ url_for('static', filename='css/logo2.png') }}">
                 <li><a onclick="logout()">Log out</a></li>
                 <li><a href="https://github.com/generot/ScruTINY">Repository</a></li>
             </ul>

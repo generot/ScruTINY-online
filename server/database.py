@@ -1,4 +1,3 @@
-from asyncio.proactor_events import _ProactorBaseWritePipeTransport
 import os
 from pymongo import *
 from bson import ObjectId
@@ -12,10 +11,20 @@ client = MongoClient(uri)
 scrutiny_db = client.get_database("ScrutinyDB")
 users = scrutiny_db["Users"]
 
-def register_user(name):
-    users.insert_one({ "name": name })
+def make_id(uid):
+    id = None
 
-    res = users.find_one({ "name": name })
+    try:
+        id = ObjectId(uid)
+    except:
+        return { "status": "ERROR" }
+
+    return { "status": "OK", "id": id }
+
+def register_user(obj):
+    users.insert_one({ "name": obj["name"], "disturbances":  obj["disturbances"]})
+
+    res = users.find_one({ "name": obj["name"] })
     id = str(res["_id"])
 
     return { "status": "OK", "uid": id }
@@ -34,3 +43,23 @@ def verify_user(uid):
         return { "status": "OK", "exists": True }
     
     return { "status": "OK", "exists": False }
+
+def add_data_to_db(uid, data):
+    res_id = make_id(uid)
+
+    if res_id["status"] != "OK":
+        return res_id
+
+    users.update_one({ "_id": res_id["id"] }, { "$push": { "disturbances": data } })
+
+    return { "status": "OK" }
+
+def get_data_from_db(uid):
+    res_id = make_id(uid)
+
+    if res_id["status"] != "OK":
+        return res_id
+
+    res = users.find_one({ "_id": res_id["id"] })
+
+    return { "status": "OK", "data": res["disturbances"] }
