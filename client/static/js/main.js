@@ -4,16 +4,17 @@ const serverSocket = SocketIO.io();
 const popupDiv = document.getElementById("popup-div");
 
 serverSocket.on("connect", () => {
-    let uri = window.location.href;
+    let uri = window.location.pathname;
 
-    serverSocket.emit("connected-ids", { data: { _uri: uri, _id: serverSocket.id } });
+    serverSocket.emit("connected-ids", { _uri: uri, _id: serverSocket.id });
 })
 
 serverSocket.on("post-data", (data) => {    
     let newElem = document.createElement("input");
+    let msg = `Disturbance: ${data["data"]} cm away from sensor.`;
 
     newElem.setAttribute("class", "ds-message");
-    newElem.setAttribute("value", data["data"]);
+    newElem.setAttribute("value", msg);
     newElem.readOnly = true;
 
     popupDiv.appendChild(newElem);

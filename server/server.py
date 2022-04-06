@@ -11,6 +11,8 @@ STATIC_FOLDER_PATH = os.path.abspath("./client/static")
 server = Flask(__name__, static_folder=STATIC_FOLDER_PATH, template_folder=TEMPLATE_FOLDER_PATH)
 socket = SocketIO(server)
 
+all_clients = {}
+
 @server.route("/")
 def main_page():
     return render_template("index.html")
@@ -38,9 +40,9 @@ def verify():
 @server.route("/postData/<uid>", methods=["POST"])
 def handle_post2(uid):
     res = request.get_data(as_text=True)
+    path = f"/user/{uid}"
 
-    #Might need to change the sockets later
-    socket.emit("post-data", { "data": res }, to=f"{uid}")
+    socket.emit("post-data", { "data": res }, to=f"{all_clients[path]}")
 
     return "\r\nSEND OK\r\n"
 
@@ -52,6 +54,9 @@ def handle_post():
 
     return "\r\nSEND OK\r\n"
 
-@socket.on("connect")
+@socket.on("connected-ids")
 def on_connect(data):
-    print(data)
+    conn_uri = data["_uri"]
+    conn_socket_id = data["_id"]
+
+    all_clients[conn_uri] = conn_socket_id
