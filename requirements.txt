@@ -4,3 +4,4 @@ gevent-websocket===0.10.1
 gunicorn===20.1.0
 pymongo===4.0.2
 python-dotenv===0.19.2
+dnspython===2.2.1
