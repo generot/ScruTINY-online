@@ -17,6 +17,10 @@ all_clients = {}
 def main_page():
     return render_template("index.html")
 
+@server.route("/favicon.ico")
+def load_icon():
+    return send_file(os.path.abspath("client/static/css/favicon.ico"))
+
 @server.route("/user/<uid>")
 def load_user(uid):
     return render_template("view.html")
