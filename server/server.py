@@ -1,9 +1,13 @@
 import os
 import json
-import server.database as scrutiny_db
 
 from flask import *
 from flask_socketio import SocketIO
+from dotenv import load_dotenv
+
+load_dotenv(os.path.abspath(".env"))
+
+import server.database as scrutiny_db
 
 TEMPLATE_FOLDER_PATH = os.path.abspath("./client/html")
 STATIC_FOLDER_PATH = os.path.abspath("./client/static")
@@ -55,6 +59,15 @@ def handle_post2(uid):
     scrutiny_db.add_data_to_db(uid, res)
 
     return "\r\nSEND OK\r\n"
+
+@server.route("/deleteContent", methods=["GET"])
+def delete_cont():
+    args = request.args.to_dict()
+
+    if args["pass"] == os.environ["DANGER_PASS"]:
+        return scrutiny_db.remove_data_from_db(args["uid"])
+
+    return { "code": "403" }
 
 @server.route("/postData", methods=["POST"])
 def handle_post():

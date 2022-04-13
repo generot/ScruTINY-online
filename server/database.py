@@ -1,9 +1,6 @@
 import os
 from pymongo import *
 from bson import ObjectId
-from dotenv import load_dotenv
-
-load_dotenv(os.path.abspath(".env"))
 
 uri = os.environ["MONGODB_URI"]
 client = MongoClient(uri)
@@ -51,6 +48,16 @@ def add_data_to_db(uid, data):
         return res_id
 
     users.update_one({ "_id": res_id["id"] }, { "$push": { "disturbances": data } })
+
+    return { "status": "OK" }
+
+def remove_data_from_db(uid):
+    res_id = make_id(uid)
+
+    if res_id["status"] != "OK":
+        return res_id
+
+    users.update_one({ "_id": res_id["id"] }, { "$set": { "disturbances": [] } })
 
     return { "status": "OK" }
 
